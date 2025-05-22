@@ -19,12 +19,12 @@ if (!$form->validate($email, $password)) {
     ]);
 }
 //match the credentials
-$user = $db->query('SELECT * FROM users WHERE email = :email', [
+$user = $db->query('SELECT * FROM gebruiker WHERE Gebruikersnaam = :email', [
     'email' => $email
 ])->find();
 
 if ($user) {
-    if (password_verify($password, $user['password'])) {
+    if (password_verify($password, $user['Wachtwoord'])) {
         login([
             'email' => $email
         ]);

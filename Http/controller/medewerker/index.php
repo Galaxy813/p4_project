@@ -4,17 +4,18 @@ use Core\Database;
 
 $db = App::resolve(Database::class);
 
-$notes = $db->query("
+$medewerker = $db->query("
     SELECT 
-        melding.Bericht,
+        medewerker.Nummer,
+        medewerker.Medewerkersoort,
         CONCAT(COALESCE(gebruiker.Voornaam, 'Onbekend'), ' ',
                COALESCE(gebruiker.Tussenvoegsel, ''), ' ',
                COALESCE(gebruiker.Achternaam, '')) AS VolledigeNaam
-    FROM melding
-    LEFT JOIN medewerker ON melding.MedewerkerId = medewerker.Id
+    FROM medewerker 
     LEFT JOIN gebruiker ON medewerker.GebruikerId = gebruiker.Id
 ")->get();
 
-view("notes/index.view.php", [
-    'notes' => $notes
+view("medewerker/index.view.php", [
+    'medewerker' => $medewerker,
+    "heading" => "Medewerker overicht"
 ]);

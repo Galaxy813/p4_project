@@ -18,11 +18,13 @@
                         <a href="/"
                             class="<?php echo urlIs('/') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 px-3 py-2 rounded-md text-sm font-medium"
                             aria-current="page">Home</a>
-                        <a href="/about"
-                            class="<?php echo urlIs('/about') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">About</a>
                         <?php if ($_SESSION['user'] ?? false): ?>
                             <a href="/notes"
-                                class="<?php echo urlIs('/notes') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Notes</a>
+                                class="<?php echo urlIs('/notes') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Melding</a>
+                            <a href="/accounts/create"
+                                class="<?php echo urlIs('/accounts/create') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Accounten</a>
+                                 <a href="/medewerker/create"
+                                class="<?php echo urlIs('/medewerker/create') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Medewerker</a>
                         <?php endif; ?>
                         <a href="/contact"
                             class="<?php echo urlIs('/contact') ? 'bg-gray-900 text-white' : 'text-gray-300' ?> hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
