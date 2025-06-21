@@ -15,4 +15,24 @@ class Validator
     {
         return filter_var($value, FILTER_VALIDATE_EMAIL);
     }
+
+    public static function date($value)
+    {
+        // Huidige datum zonder tijd (middernacht vandaag)
+        $now = new \DateTime('today');
+
+        try {
+            $d = new \DateTime($value);
+        } catch (\Exception $e) {
+            // Ongeldige datumstring
+            return false;
+        }
+
+        // Datum mag niet in het verleden liggen
+        if ($d < $now) {
+            return false;
+        }
+
+        return true;
+    }
 }

@@ -1,29 +1,62 @@
 <?php
+
 use Core\App;
 use Core\Validator;
 use Core\Database;
 
 $db = App::resolve(Database::class);
 
+// Verzamel gegevens
+$gebruikerId = $_SESSION['user']['id'] ?? null;
+$bericht = $_POST['Bericht'] ?? '';
+$type = $_POST['type'] ?? '';
+$datum = $_POST['date'] ?? null;
 
-    $errors = [];
-    if (!Validator::string($_POST['body'], 1, 1000)) {
-        $errors['body'] = 'A body of no more than 1,000 characters is required.';
-    }
+$errors = [];
 
-    if (!empty($errors)) {
-        return view("notes/create.view.php", [
-            'heading' => 'Create Note',
-            'errors' => $errors
+// Validatie
+if (!Validator::string($bericht, 1, 200)) {
+    $errors['Bericht'] = 'Een bericht van maximaal 200 tekens is verplicht.';
+}
+if (!in_array($type, ['notificatie', 'klacht', 'review'])) {
+    $errors['type'] = 'Selecteer een geldig type.';
+}
+if (!$datum || !Validator::date($datum)) {
+    $errors['date'] = 'Vul een geldige datum in die niet in het verleden ligt.';
+}
+
+if (!empty($errors)) {
+    return view("index.view.php", [
+        'heading' => 'Home',
+        'errors' => $errors
+    ]); 
+}
+
+try {
+    // Bereken het volgende unieke Nummer
+    $stmt = $db->query("SELECT MAX(Nummer) AS max FROM melding");
+    $maxNummer = $stmt->find()['max'] ?? 0;
+    $nieuwNummer = $maxNummer + 1;
+
+    // Voeg de melding toe
+    $db->query('INSERT INTO melding (Nummer, Bericht, GebruikerId, Type, Datumaangemaakt, Datumgewijzigd) 
+    VALUES (:Nummer, :Bericht, :GebruikerId, :Type, :Datumaangemaakt, NOW())', [
+        'Nummer' => $nieuwNummer,
+        'Bericht' => $bericht,
+        'GebruikerId' => $gebruikerId,
+        'Type' => $type,
+        'Datumaangemaakt' => $datum  // hier je eigen datumvariabele
     ]);
-    }
 
-    if (empty($errors)) {
-        $db->query('INSERT INTO notes(body, user_id) VALUES(:body, :user_id)', [
-            'body' => $_POST['body'],
-            'user_id' => 1
-        ]);
+    // Redirect
+    header('Location: /');
+    exit;
 
-        header('location: /notes');
-        die();
-    }
+} catch (Exception $e) {
+    error_log('Database fout: ' . $e->getMessage());
+
+    return view("index.view.php", [
+        'heading' => 'Home',
+        'errors' => ['database' => 'Er is een fout opgetreden bij het opslaan van de melding. Probeer het later opnieuw.']
+    ]);
+}

@@ -7,12 +7,14 @@ $db = App::resolve(Database::class);
 $notes = $db->query("
     SELECT 
         melding.Bericht,
+        melding.GebruikerId,
+        melding.Type,
         CONCAT(COALESCE(gebruiker.Voornaam, 'Onbekend'), ' ',
                COALESCE(gebruiker.Tussenvoegsel, ''), ' ',
                COALESCE(gebruiker.Achternaam, '')) AS VolledigeNaam
     FROM melding
-    LEFT JOIN medewerker ON melding.MedewerkerId = medewerker.Id
-    LEFT JOIN gebruiker ON medewerker.GebruikerId = gebruiker.Id
+    LEFT JOIN gebruiker ON melding.GebruikerId = gebruiker.Id
+    WHERE Type != 'Feedback'
 ")->get();
 
 view("notes/index.view.php", [
