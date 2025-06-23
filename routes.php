@@ -1,7 +1,7 @@
 <?php
 
 //alle main routes dat zit op de pagina!
-$router->get('/', 'index.php');
+$router->get('/', 'events/eventController.php');
 $router->get('/contact', 'contact.php');
 
 $router->get('/notes', 'notes/index.php')->only('auth');
