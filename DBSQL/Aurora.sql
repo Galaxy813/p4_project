@@ -1,5 +1,5 @@
-CREATE DATABASE IF NOT EXISTS TheaterDB;
-USE TheaterDB;
+CREATE DATABASE IF NOT EXISTS TheaterD;
+USE TheaterD;
 
 -- 1. Gebruiker
 CREATE TABLE gebruiker (
@@ -127,7 +127,7 @@ CREATE TABLE ticket (
 CREATE TABLE melding (
     Id INT NOT NULL AUTO_INCREMENT,
     BezoekerId INT,
-    MedewerkerId INT,
+    GebruikerId INT NOT NULL,
     Nummer MEDIUMINT NOT NULL UNIQUE,
     Type VARCHAR(20) NOT NULL,
     Bericht VARCHAR(250) NOT NULL,
@@ -136,8 +136,8 @@ CREATE TABLE melding (
     Datumaangemaakt DATETIME(6) NOT NULL,
     Datumgewijzigd DATETIME(6) NOT NULL,
     PRIMARY KEY (Id),
-    FOREIGN KEY (BezoekerId) REFERENCES Bezoeker(Id),
-    FOREIGN KEY (MedewerkerId) REFERENCES Medewerker(Id)
+    FOREIGN KEY (GebruikerId) REFERENCES Gebruiker(Id),
+    FOREIGN KEY (BezoekerId) REFERENCES Bezoeker(Id)
 ) ENGINE=InnoDB;
 
 -- 2. Rol

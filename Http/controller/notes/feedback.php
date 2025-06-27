@@ -7,29 +7,21 @@ use Core\Database;
 $db = App::resolve(Database::class);
 
 // Verzamel gegevens
-$gebruikerId = $_SESSION['user']['id'] ?? null;
+$gebruikerId = $_POST['GebruikerId'] ?? '';
+$FeedbackType = $_POST['FeedbackType'] ?? '';
 $bericht = $_POST['Bericht'] ?? '';
-$type = $_POST['type'] ?? '';
-$datum = $_POST['date'] ?? null;
 
 $errors = [];
 
 // Validatie
-if (!Validator::string($bericht, 1, 200)) {
-    $errors['Bericht'] = 'Een bericht van maximaal 200 tekens is verplicht.';
-}
-if (!in_array($type, ['notificatie', 'klacht', 'review'])) {
-    $errors['type'] = 'Selecteer een geldig type.';
-}
-if (!$datum || !Validator::date($datum)) {
-    $errors['date'] = 'Vul een geldige datum in die niet in het verleden ligt.';
+if (!Validator::string($bericht, 10, 200)) {
+    $errors['Bericht'] = 'Een bericht van minimaal 10 tekens/maximaal 200 tekens is verplicht.';
 }
 
 if (!empty($errors)) {
-    return view("index.view.php", [
-        'heading' => 'Home',
+    return view("notes/index.view.php", [
         'errors' => $errors
-    ]); 
+    ]);
 }
 
 try {
@@ -40,22 +32,19 @@ try {
 
     // Voeg de melding toe
     $db->query('INSERT INTO melding (Nummer, Bericht, GebruikerId, Type, Datumaangemaakt, Datumgewijzigd) 
-    VALUES (:Nummer, :Bericht, :GebruikerId, :Type, :Datumaangemaakt, NOW())', [
+VALUES (:Nummer, :Bericht, :GebruikerId, :Type, NOW(), NOW())', [
         'Nummer' => $nieuwNummer,
         'Bericht' => $bericht,
         'GebruikerId' => $gebruikerId,
-        'Type' => $type,
-        'Datumaangemaakt' => $datum  // hier je eigen datumvariabele
+        'Type' => $FeedbackType
     ]);
-
     // Redirect
-    header('Location: /');
+    header('Location: /notes');
     exit;
-
 } catch (Exception $e) {
     error_log('Database fout: ' . $e->getMessage());
 
-    return view("index.view.php", [
+    return view("notes/index.view.php", [
         'heading' => 'Home',
         'errors' => ['database' => 'Er is een fout opgetreden bij het opslaan van de melding. Probeer het later opnieuw.']
     ]);

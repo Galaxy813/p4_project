@@ -101,7 +101,7 @@ tr:nth-of-type(2n) {
     width: 100%;
     max-width: 1200px;
     margin: auto;
-    padding: 1rem;
+    padding: 2rem;
     text-align: center;
 }
 
@@ -130,44 +130,33 @@ tr:nth-of-type(2n) {
 }
 
 .card {
-    padding: 2rem;
+    padding: 1.2rem; /* iets minder padding */
     display: grid;
-    gap: 1rem;
+    gap: 0.8rem; /* minder ruimte tussen items */
     border-radius: 5px;
     background-color: white;
-    box-shadow: 5px, 5px, 30px rgba(0, 0, 0, .1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, .05); /* gefixt box-shadow (je had een komma te veel) */
     cursor: pointer;
 }
 
-.card:hover {
-    transform: scale(1.05);
+.card__footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem; /* ruimte tussen foto en naam */
 }
 
-.card i {
-    font-size: 2.5rem;
-    color: rgb(36, 85, 97);
-}
-
-.card p {
-    font-size: 1rem;
-    font-weight: 500;
-}
-
-.card hr {
+.card__footer img {
     width: 40px;
-    margin: auto;
+    height: 40px;
+    border-radius: 50%;
 }
 
-.card img {
-    width: 60px;
-    height: 60px;
-    margin: auto;
-}
-
-.card .name {
-    font-size: .9rem;
+.card__footer .name {
+    font-size: 0.9rem;
     font-weight: 400;
     color: rgb(36, 85, 97);
+    margin: 0;
 }
 
 @media (width < 900px) {
