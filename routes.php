@@ -29,15 +29,3 @@ $router->get('/myAccount', 'accounts/myAccount.php')->only('auth');
 $router->get('/medewerker/create', 'medewerker/index.php')->only('auth');
 $router->get('/medewerker', 'medewerker/create.php');
 
-
-
-
-
-
-
-
-// $router->get('/note', 'notes/show.php');
-// $router->delete('/note', 'notes/destroy.php');
-
-// $router->get('/note/edit', 'notes/edit.php');
-// $router->patch('/note', 'notes/update.php');

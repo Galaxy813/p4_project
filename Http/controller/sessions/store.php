@@ -35,7 +35,7 @@ try {
     'Achternaam' => $user['Achternaam'],
     'role' => $role['Naam'] ?? 'Geen rol gevonden'
 ];
-
+        $_SESSION['success'] = "Je bent ingelogt";
         header('Location: /');
         exit();
     }

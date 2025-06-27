@@ -26,6 +26,7 @@ try {
     ]);
 
     // Redirect
+    $_SESSION['success'] = "Je account is succesfol verwijderd";
     header('Location: /accounts/create');
     exit;
 

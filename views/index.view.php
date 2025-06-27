@@ -78,6 +78,46 @@
   </div>
 </main>
 
+<?php if (!empty($_SESSION['success'])): ?>
+    <div id="popup-success" style="
+    position: fixed;
+    bottom: 0%;
+    right: 0%;
+    transform: translate(-50%, -50%);
+    background-color: #4ea253;
+    color: rgb(255, 255, 255);
+    padding: 25px 40px;
+    font-size: 1.6em;
+    border-radius: 10px;
+    border: 1px solid rgb(79, 111, 79);
+    box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+    font-weight: bold;
+    z-index: 9999;
+    opacity: 0.9;
+    transition: opacity 0.5s ease-out;
+">
+      <?= htmlspecialchars($_SESSION['success']) ?>
+    </div>
+    <script>
+      setTimeout(() => {
+        const popup = document.getElementById('popup-success');
+        if (popup) {
+          popup.style.opacity = '0';
+          setTimeout(() => popup.remove(), 500);
+        }
+      }, 3000);
+
+      // Optioneel: sluit popup bij klikken
+      document.getElementById('popup-success').addEventListener('click', () => {
+        const popup = document.getElementById('popup-success');
+        popup.style.opacity = '0';
+        setTimeout(() => popup.remove(), 500);
+      });
+    </script>
+    <?php unset($_SESSION['success']); ?>
+  <?php endif; ?>
+
+
 
 
 

@@ -73,7 +73,7 @@ try {
         'last' => $last,
         'email' => $email
     ]);
-
+    $_SESSION['success'] = "Je account is succesfol aangepast";
     header('Location: /accounts/create');
     exit;
 

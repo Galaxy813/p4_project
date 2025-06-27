@@ -140,6 +140,19 @@ CREATE TABLE melding (
     FOREIGN KEY (BezoekerId) REFERENCES Bezoeker(Id)
 ) ENGINE=InnoDB;
 
+CREATE TABLE feedback (
+    Id INT NOT NULL AUTO_INCREMENT,
+    MeldingId INT NOT NULL,
+    Nummer MEDIUMINT NOT NULL UNIQUE,
+    Bericht VARCHAR(250) NOT NULL,
+    Isactief BIT NOT NULL,
+    Opmerking VARCHAR(250),
+    Datumaangemaakt DATETIME(6) NOT NULL,
+    Datumgewijzigd DATETIME(6) NOT NULL,
+    PRIMARY KEY (Id),
+    FOREIGN KEY (MeldingId) REFERENCES melding(Id)
+) ENGINE=InnoDB;
+
 -- 2. Rol
 INSERT INTO rol (GebruikerId, Naam, Isactief, Opmerking, Datumaangemaakt, Datumgewijzigd) VALUES
 (1, 'Bezoeker', 1, NULL, NOW(), NOW()),
@@ -180,4 +193,6 @@ INSERT INTO ticket (BezoekerId, VoorstellingId, PrijsId, Nummer, Barcode, Datum,
 INSERT INTO melding (BezoekerId, MedewerkerId, Nummer, Type, Bericht, Isactief, Opmerking, Datumaangemaakt, Datumgewijzigd) VALUES
 (1, NULL, 4001, 'Vraag', 'Tot hoe laat duurt de voorstelling Hamlet?', 1, NULL, NOW(), NOW()),
 (2, NULL, 2, 4002, 'Technisch', 'Geluid valt uit tijdens scène 3.', 1, NULL, NOW(), NOW());
+
+Hallo Jim Pecker wij gaan voor jou het zo snel mogelijk uitvogelen
 

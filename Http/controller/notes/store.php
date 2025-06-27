@@ -29,7 +29,7 @@ if (!empty($errors)) {
     return view("index.view.php", [
         'heading' => 'Home',
         'errors' => $errors
-    ]); 
+    ]);
 }
 
 try {
@@ -48,6 +48,7 @@ try {
         'Datumaangemaakt' => $datum  // hier je eigen datumvariabele
     ]);
 
+    $_SESSION['success'] = "Melding is succesfol gestuurd!";
     // Redirect
     header('Location: /');
     exit;

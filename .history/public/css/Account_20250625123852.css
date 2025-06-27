@@ -1,0 +1,121 @@
+.error-message {
+    background-color: #ffdddd; /* lichte rode achtergrond */
+    color: #b30000;           /* donkerrood voor tekst */
+    font-weight: 700;
+    text-align: center;
+    padding: 1rem;
+    border: 1px solid #b30000;
+    border-radius: 5px;
+    font-size: 1.2rem;
+}
+
+/* Optioneel icoon toevoegen via before */
+.error-message::before {
+    content: "⚠️ ";
+    font-size: 1.4rem;
+    vertical-align: middle;
+}
+
+.section__container {
+    width: 100%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 1rem;
+    text-align: center;
+}
+
+.header {
+    margin-bottom: 3rem;
+}
+
+.header p {
+    letter-spacing: 2px;
+    font-size: 1.7rem;
+    font-weight: 500;
+}
+
+.header h1 {
+    font-size: 2rem;
+    font-weight: 900;
+
+}
+
+.testimonials__grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    padding: 2rem;
+    display: grid;
+    gap: 1rem;
+    border-radius: 5px;
+    background-color: white;
+    box-shadow: 5px, 5px, 30px rgba(0, 0, 0, .1);
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: scale(1.1);
+}
+
+.card i {
+    font-size: 2.5rem;
+    color: rgb(36, 85, 97);
+}
+
+.card p {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.card hr {
+    width: 40px;
+    margin: auto;
+}
+
+.card img {
+    width: 60px;
+    height: 60px;
+    margin: auto;
+}
+
+.card .name {
+    font-size: .9rem;
+    font-weight: 400;
+    color: rgb(36, 85, 97);
+}
+
+@media (width < 900px) {
+    .testimonials__grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+}
+
+@media (width < 600px) {
+    .testimonials__grid {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1rem;
+    }
+}
+
+.error-box {
+  background-color: #ffe5e5;
+  color: #b00020;
+  border: 1px solid #f5c2c7;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin: 2rem auto;
+  max-width: 600px;
+}
+
+.error-box h1 {
+  font-size: 1.3em;
+  margin: 0;
+}
