@@ -100,6 +100,8 @@ CREATE TABLE voorstelling (
     Datumgewijzigd DATETIME(6) NOT NULL,
     PRIMARY KEY (Id),
     FOREIGN KEY (MedewerkerId) REFERENCES Medewerker(Id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 -- 8. Ticket
@@ -121,6 +123,8 @@ CREATE TABLE ticket (
     FOREIGN KEY (BezoekerId) REFERENCES Bezoeker(Id),
     FOREIGN KEY (VoorstellingId) REFERENCES Voorstelling(Id),
     FOREIGN KEY (PrijsId) REFERENCES Prijs(Id)
+		ON DELETE CASCADE
+        ON UPDATE CASCADE
 ) ENGINE=InnoDB;
 
 -- 9. Melding
@@ -138,6 +142,19 @@ CREATE TABLE melding (
     PRIMARY KEY (Id),
     FOREIGN KEY (GebruikerId) REFERENCES Gebruiker(Id),
     FOREIGN KEY (BezoekerId) REFERENCES Bezoeker(Id)
+) ENGINE=InnoDB;
+
+CREATE TABLE feedback (
+    Id INT NOT NULL AUTO_INCREMENT,
+    MeldingId INT NOT NULL,
+    Nummer MEDIUMINT NOT NULL UNIQUE,
+    Bericht VARCHAR(250) NOT NULL,
+    Isactief BIT NOT NULL,
+    Opmerking VARCHAR(250),
+    Datumaangemaakt DATETIME(6) NOT NULL,
+    Datumgewijzigd DATETIME(6) NOT NULL,
+    PRIMARY KEY (Id),
+    FOREIGN KEY (MeldingId) REFERENCES melding(Id)
 ) ENGINE=InnoDB;
 
 -- 2. Rol
@@ -167,9 +184,35 @@ INSERT INTO prijs (Tarief, Isactief, Opmerking, Datumaangemaakt, Datumgewijzigd)
 (8.00, 1, 'Studententarief', NOW(), NOW());
 
 -- 7. Voorstelling
-INSERT INTO voorstelling (MedewerkerId, Naam, Beschrijving, Datum, Tijd, MaxAantalTickets, Beschikbaarheid, Isactief, Opmerking, Datumaangemaakt, Datumgewijzigd) VALUES
-(1, 'Hamlet', 'Een klassiek toneelstuk van Shakespeare', '2025-06-15', '20:00:00', 100, 'Beschikbaar', 1, NULL, NOW(), NOW()),
-(2, 'De Kleine Prins', 'Een voorstelling voor kinderen', '2025-06-20', '15:00:00', 50, 'Beschikbaar', 1, NULL, NOW(), NOW());
+INSERT INTO voorstelling
+(MedewerkerId, Naam, Beschrijving, Datum, Tijd, MaxAantalTickets, Beschikbaarheid, Isactief, Opmerking, Datumaangemaakt, Datumgewijzigd)
+VALUES
+(1, 'Zomerlicht', 'Een warme avond vol muziek en emotie.', '2025-07-11', '19:30:00', 10, 'Beschikbaar', b'1', '', NOW(), NOW());
+
+INSERT INTO voorstelling
+(MedewerkerId, Naam, Beschrijving, Datum, Tijd, MaxAantalTickets, Beschikbaarheid, Isactief, Opmerking, Datumaangemaakt, Datumgewijzigd)
+VALUES
+(1, 'De Kleine Reiziger', 'Avontuurlijk jeugdtheater voor het gezin.', '2025-07-12', '14:00:00', 10, 'Beschikbaar', b'1', '', NOW(), NOW());
+
+INSERT INTO voorstelling
+(MedewerkerId, Naam, Beschrijving, Datum, Tijd, MaxAantalTickets, Beschikbaarheid, Isactief, Opmerking, Datumaangemaakt, Datumgewijzigd)
+VALUES
+(1, 'Onderhuids', 'Spannend drama met onverwachte wendingen.', '2025-07-12', '20:00:00', 10, 'Beschikbaar', b'1', '', NOW(), NOW());
+
+INSERT INTO voorstelling
+(MedewerkerId, Naam, Beschrijving, Datum, Tijd, MaxAantalTickets, Beschikbaarheid, Isactief, Opmerking, Datumaangemaakt, Datumgewijzigd)
+VALUES
+(2, 'Het Lied van de Stilte', 'Muziektheater over afscheid en verbinding.', '2025-07-13', '15:00:00', 10, 'Beschikbaar', b'1', '', NOW(), NOW());
+
+INSERT INTO voorstelling
+(MedewerkerId, Naam, Beschrijving, Datum, Tijd, MaxAantalTickets, Beschikbaarheid, Isactief, Opmerking, Datumaangemaakt, Datumgewijzigd)
+VALUES
+(2, 'Avond in het Park', 'Luchtige komedie over alledaagse situaties.', '2025-07-16', '19:00:00', 10, 'Beschikbaar', b'1', '', NOW(), NOW());
+
+INSERT INTO voorstelling
+(MedewerkerId, Naam, Beschrijving, Datum, Tijd, MaxAantalTickets, Beschikbaarheid, Isactief, Opmerking, Datumaangemaakt, Datumgewijzigd)
+VALUES
+(2, 'Spiegelbeeld', 'Poëtische voorstelling over zelfinzicht.', '2025-07-17', '20:30:00', 10, 'Beschikbaar', b'1', '', NOW(), NOW());
 
 -- 8. Ticket
 INSERT INTO ticket (BezoekerId, VoorstellingId, PrijsId, Nummer, Barcode, Datum, Tijd, Status, Isactief, Opmerking, Datumaangemaakt, Datumgewijzigd) VALUES
@@ -180,4 +223,6 @@ INSERT INTO ticket (BezoekerId, VoorstellingId, PrijsId, Nummer, Barcode, Datum,
 INSERT INTO melding (BezoekerId, MedewerkerId, Nummer, Type, Bericht, Isactief, Opmerking, Datumaangemaakt, Datumgewijzigd) VALUES
 (1, NULL, 4001, 'Vraag', 'Tot hoe laat duurt de voorstelling Hamlet?', 1, NULL, NOW(), NOW()),
 (2, NULL, 2, 4002, 'Technisch', 'Geluid valt uit tijdens scène 3.', 1, NULL, NOW(), NOW());
+
+Hallo Jim Pecker wij gaan voor jou het zo snel mogelijk uitvogelen
 

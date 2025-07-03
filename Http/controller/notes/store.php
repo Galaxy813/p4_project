@@ -26,10 +26,10 @@ if (!$datum || !Validator::date($datum)) {
 }
 
 if (!empty($errors)) {
-    return view("index.view.php", [
+    return view("events/index.view.php", [
         'heading' => 'Home',
         'errors' => $errors
-    ]); 
+    ]);
 }
 
 try {
@@ -48,6 +48,7 @@ try {
         'Datumaangemaakt' => $datum  // hier je eigen datumvariabele
     ]);
 
+    $_SESSION['success'] = "Melding is succesfol gestuurd!";
     // Redirect
     header('Location: /');
     exit;
@@ -55,7 +56,7 @@ try {
 } catch (Exception $e) {
     error_log('Database fout: ' . $e->getMessage());
 
-    return view("index.view.php", [
+    return view("events/index.view.php", [
         'heading' => 'Home',
         'errors' => ['database' => 'Er is een fout opgetreden bij het opslaan van de melding. Probeer het later opnieuw.']
     ]);

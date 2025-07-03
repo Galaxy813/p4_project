@@ -1,7 +1,11 @@
 <?php
 
 //alle main routes dat zit op de pagina!
-$router->get('/', 'index.php');
+$router->get('/', 'events/eventController.php');
+$router->get('/NieuweEvent', 'events/create.php');
+$router->post('/addEvenement', 'events/add.php');
+$router->delete('/destroyEvenement', 'events/destroy.php');
+
 $router->get('/contact', 'contact.php');
 
 $router->get('/notes', 'notes/index.php')->only('auth');
@@ -27,17 +31,7 @@ $router->patch('/update', 'accounts/update.php')->only('auth');
 $router->get('/myAccount', 'accounts/myAccount.php')->only('auth');
 
 $router->get('/medewerker/create', 'medewerker/index.php')->only('auth');
-$router->get('/medewerker', 'medewerker/create.php');
+$router->post('/show/medewerker', 'medewerker/create.php');
+$router->get('/medewerker', 'medewerker/show.php')->only('auth');
+$router->delete('/medewerker/destroy', 'medewerker/destroy.php');
 
-
-
-
-
-
-
-
-// $router->get('/note', 'notes/show.php');
-// $router->delete('/note', 'notes/destroy.php');
-
-// $router->get('/note/edit', 'notes/edit.php');
-// $router->patch('/note', 'notes/update.php');

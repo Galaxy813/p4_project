@@ -1,0 +1,48 @@
+<?php
+
+use Core\App;
+use Core\Database;
+
+$db = App::resolve(Database::class);
+
+$gebruikerId = $_SESSION['user']['id'] ?? null;
+
+$mynotes = $db->query("
+    SELECT 
+        melding.Bericht,
+        melding.Type,
+        CONCAT(
+            COALESCE(gebruiker.Voornaam, 'Onbekend'), ' ',
+            COALESCE(gebruiker.Tussenvoegsel, ''), ' ',
+            COALESCE(gebruiker.Achternaam, '')
+        ) AS VolledigeNaam
+    FROM melding
+    LEFT JOIN gebruiker ON melding.GebruikerId = gebruiker.Id
+    WHERE melding.GebruikerId = :id 
+    AND Type != 'Feedback'
+", [
+    'id' => $gebruikerId
+])->get();
+
+$FeedbackNotes = $db->query("
+    SELECT 
+        melding.Bericht,
+        melding.Type,
+        CONCAT(
+            COALESCE(gebruiker.Voornaam, 'Onbekend'), ' ',
+            COALESCE(gebruiker.Tussenvoegsel, ''), ' ',
+            COALESCE(gebruiker.Achternaam, '')
+        ) AS VolledigeNaam
+    FROM melding
+    LEFT JOIN gebruiker ON melding.GebruikerId = gebruiker.Id
+    WHERE melding.GebruikerId = :id 
+    AND Type = 'Feedback'
+", [
+    'id' => $gebruikerId
+])->get();
+
+view("accounts/myAccount.php", [
+    'heading' => 'My account',
+    'mynotes' => $mynotes,
+    'FeedbackNotes' => $FeedbackNotes
+]);

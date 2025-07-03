@@ -9,6 +9,7 @@ try {
 
     $medewerker = $db->query("
         SELECT 
+            medewerker.Id,
             medewerker.Nummer,
             medewerker.Medewerkersoort,
             CONCAT(

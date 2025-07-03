@@ -16,9 +16,13 @@
             <th class="th-account">Wijzigen</th>
             <th class="th-account">Verwijderen</th>
         </tr>
-
+        <a href="/medewerker"
+            class="inline-block mt-6 px-6 py-3 bg-blue-900 text-white font-semibold rounded-lg shadow hover:bg-blue-800 transition-colors duration-200">
+            Nieuwe Evenementen
+        </a>
         <?php if (!empty($medewerker)): ?>
             <?php foreach ($medewerker as $medewerk): ?>
+
                 <tr>
                     <td class="data-cell td-account" data-cell="Volledige naam">
                         <?= htmlspecialchars($medewerk['VolledigeNaam']) ?>
@@ -33,7 +37,14 @@
                         <a href="#"><img class="icon" src="/img/update.png" alt="Update"></a>
                     </td>
                     <td class="data-cell td-account" data-cell="Verwijderen">
-                        <a href="#"><img class="icon" src="/img/delete.png" alt="Delete"></a>
+                        <form method="POST" action="/medewerker/destroy"
+                            onsubmit="return confirm('Weet je zeker dat je deze medewerker wilt verwijderen?');">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="id" value="<?= $medewerk['Id'] ?? '' ?>">
+                            <button type="submit" class="icon-button">
+                                <img class="icon" src="/img/delete.png" alt="Delete">
+                            </button>
+                        </form>
                     </td>
                 </tr>
             <?php endforeach; ?>
@@ -46,5 +57,44 @@
         <?php endif; ?>
     </table>
 </div>
+
+<?php if (!empty($_SESSION['success'])): ?>
+    <div id="popup-success" style="
+    position: fixed;
+    bottom: 0%;
+    right: 0%;
+    transform: translate(-50%, -50%);
+    background-color: #4ea253;
+    color: rgb(255, 255, 255);
+    padding: 25px 40px;
+    font-size: 1.6em;
+    border-radius: 10px;
+    border: 1px solid rgb(79, 111, 79);
+    box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+    font-weight: bold;
+    z-index: 9999;
+    opacity: 0.9;
+    transition: opacity 0.5s ease-out;
+">
+        <?= htmlspecialchars($_SESSION['success']) ?>
+    </div>
+    <script>
+        setTimeout(() => {
+            const popup = document.getElementById('popup-success');
+            if (popup) {
+                popup.style.opacity = '0';
+                setTimeout(() => popup.remove(), 500);
+            }
+        }, 3000);
+
+        // Optioneel: sluit popup bij klikken
+        document.getElementById('popup-success').addEventListener('click', () => {
+            const popup = document.getElementById('popup-success');
+            popup.style.opacity = '0';
+            setTimeout(() => popup.remove(), 500);
+        });
+    </script>
+    <?php unset($_SESSION['success']); ?>
+<?php endif; ?>
 
 <?php require_once base_path("views/partials/footer.php") ?>
