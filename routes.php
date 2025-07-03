@@ -2,6 +2,12 @@
 
 //alle main routes dat zit op de pagina!
 $router->get('/', 'events/eventController.php');
+$router->get('/NieuweEvent', 'events/create.php');
+$router->post('/addEvenement', 'events/add.php');
+$router->delete('/destroyEvenement', 'events/destroy.php');
+
+
+
 $router->get('/contact', 'contact.php');
 
 $router->get('/notes', 'notes/index.php')->only('auth');
@@ -20,6 +26,8 @@ $router->get('/accounts', 'accounts/create.php');
 
 $router->get('/medewerker/create', 'medewerker/index.php')->only('auth');
 $router->get('/medewerker', 'medewerker/create.php');
+
+
 
 
 

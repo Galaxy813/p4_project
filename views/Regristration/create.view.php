@@ -87,3 +87,8 @@
 </main>
 
 <?php require_once base_path("views/partials/footer.php") ?>
+
+<?php
+echo gebruiker; // ❌ Wrong
+echo $gebruiker; // ✅ Correct (if $gebruiker is defined)
+?> 
